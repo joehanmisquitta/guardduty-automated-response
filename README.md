@@ -1,12 +1,12 @@
 # GuardDuty Automated EC2 Isolation
 
-Automated threat detection and response pipeline on AWS. When GuardDuty flags a compromised EC2 instance, the pipeline isolates it within seconds — no human intervention required.
+Automated threat detection and response pipeline on AWS. When GuardDuty flags a compromised EC2 instance, the pipeline isolates it within seconds, no human intervention required.
 
 ---
 
 ## Problem Statement
 
-A fast-growing SaaS company has no automated response capability for EC2 threats. When GuardDuty flags an instance for SSH brute force, malicious IP communication, or cryptomining activity, the security team has to manually investigate and isolate — a process that takes 30–45 minutes and relies on someone being available. The window between detection and containment is where attackers do the most damage.
+A fast-growing SaaS company has no automated response capability for EC2 threats. When GuardDuty flags an instance for SSH brute force, malicious IP communication, or cryptomining activity, the security team has to manually investigate and isolate, a process that takes 30–45 minutes and relies on someone being available. The window between detection and containment is where attackers do the most damage.
 
 ---
 
@@ -104,7 +104,7 @@ terraform apply
 
 ## Testing the Pipeline
 
-### Step 1 — Verify with sample findings (do this first)
+### Step 1 - Verify with sample findings (do this first)
 
 ```bash
 # Replace <DETECTOR_ID> with the output from terraform apply
@@ -116,7 +116,7 @@ aws guardduty create-sample-findings \
 
 This fires a sample finding that goes through the full pipeline — EventBridge → Lambda → quarantine SG swap → SNS email. Verify each step before running real simulations.
 
-### Step 2 — SSH brute force simulation
+### Step 2 - SSH brute force simulation
 
 ```bash
 # SSH into the attacker instance
@@ -127,7 +127,7 @@ chmod +x simulation/ssh_bruteforce.sh
 ./simulation/ssh_bruteforce.sh <TARGET_PRIVATE_IP>
 ```
 
-### Step 3 — Malicious IP simulation
+### Step 3 - Malicious IP simulation
 
 ```bash
 # SSH into the target instance
@@ -137,7 +137,7 @@ chmod +x simulation/malicious_ip.sh
 ./simulation/malicious_ip.sh
 ```
 
-### Step 4 — Crypto mining simulation
+### Step 4 - Crypto mining simulation
 
 ```bash
 # Still on the target instance
@@ -145,7 +145,7 @@ chmod +x simulation/crypto_mining.sh
 ./simulation/crypto_mining.sh
 ```
 
-### Step 5 — Verify isolation
+### Step 5 - Verify isolation
 
 ```bash
 # Check that the target's SG was swapped to the quarantine SG
@@ -188,11 +188,11 @@ Note: GuardDuty charges ~$1–2/month per account even on free tier after the 30
 
 ## Skills Demonstrated
 
-- AWS GuardDuty — threat detection configuration, finding types, severity tuning
-- AWS Lambda — event-driven response automation, Python boto3, structured logging
-- AWS EventBridge — event pattern matching, rule filtering, dead letter queues
-- AWS EC2 — security group management, instance tagging, VPC Flow Logs
-- AWS SNS — topic policy, email subscription, programmatic publishing
-- Infrastructure as Code — Terraform, modular resource organisation
-- Incident Response — automated containment, audit trail, post-incident tagging
-- MITRE ATT&CK mapping — T1110 (Brute Force), T1071 (C2), T1496 (Resource Hijacking)
+- AWS GuardDuty - threat detection configuration, finding types, severity tuning
+- AWS Lambda - event-driven response automation, Python boto3, structured logging
+- AWS EventBridge - event pattern matching, rule filtering, dead letter queues
+- AWS EC2 - security group management, instance tagging, VPC Flow Logs
+- AWS SNS - topic policy, email subscription, programmatic publishing
+- Infrastructure as Code - Terraform, modular resource organisation
+- Incident Response - automated containment, audit trail, post-incident tagging
+- MITRE ATT&CK mapping - T1110 (Brute Force), T1071 (C2), T1496 (Resource Hijacking)
